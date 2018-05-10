@@ -2,14 +2,15 @@
   "name": "toa-chult",
   "version": "1.0.0",
   "description": "Chult!",
-  "main": "index.js",
+  "main": "dist/index.js",
   "author": "Ross Hendry (rhendry@googlemail.com)",
   "license": "MIT",
   "scripts": {
     "build": "babel src --out-dir dist",
     "style": "eslint lib/",
     "test": "yarn run build && mocha --require babel-core/register test/*",
-    "start": "node index.js"
+    "start": "node index.js",
+    "prepublish": "yarn run build"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
