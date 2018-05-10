@@ -1,13 +1,13 @@
-const assert = require('assert');
-const sinon = require('sinon');
-const proxyquire = require('proxyquire');
+import { equal } from "assert";
+import { stub } from "sinon";
+import proxyquire from "proxyquire";
 
 describe('The rain in chult', () => {
   var chult;
   var dieRoll;
 
   before(() => {
-    chult = proxyquire('../lib/chult', {
+    chult = proxyquire('../src/lib/chult', {
       './dice': {
         d20: () => dieRoll
       }
@@ -17,33 +17,33 @@ describe('The rain in chult', () => {
   it('is sometimes dry', () => {
     [...Array(6).keys()].slice(1).forEach(i => {
       dieRoll = i;
-      assert.equal('None', chult.rain());
+      equal('None', chult.rain());
     });
   });
 
   it('is sometimes light rain', () => {
     dieRoll = 6;
-    assert.equal('Light', chult.rain());
+    equal('Light', chult.rain());
   });
 
   it('is sometimes heavy rain', () => {
     dieRoll = 16;
-    assert.equal('Heavy', chult.rain());
+    equal('Heavy', chult.rain());
   });
 
   it('is sometimes a tropical storm', () => {
-    const die = sinon.stub();
+    const die = stub();
     die
       .onFirstCall().returns(16)
       .onSecondCall().returns(5);
 
-    const chult = proxyquire('../lib/chult', {
+    const chult = proxyquire('../src/lib/chult', {
       './dice': {
         d20: die
       }
     });
 
-    assert.equal('Tropical storm', chult.rain());
+    equal('Tropical storm', chult.rain());
   });
 });
 
@@ -52,7 +52,7 @@ describe('The wind in Chult', () => {
   var dieRoll;
 
   before(() => {
-    chult = proxyquire('../lib/chult', {
+    chult = proxyquire('../src/lib/chult', {
       './dice': {
         d20: () => dieRoll
       }
@@ -62,21 +62,21 @@ describe('The wind in Chult', () => {
   it('is sometimes non-existent', () => {
     [...Array(13).keys()].slice(1).forEach(i => {
       dieRoll = i;
-      assert.equal('None', chult.wind());
+      equal('None', chult.wind());
     });
   });
 
   it('is sometimes light', () => {
     [13, 14, 15, 16, 17].forEach(i => {
       dieRoll = i;
-      assert.equal('Light', chult.wind());
+      equal('Light', chult.wind());
     });
   });
 
   it('is sometimes strong', () => {
     [18, 19, 20].forEach(i => {
       dieRoll = i;
-      assert.equal('Strong', chult.wind());
+      equal('Strong', chult.wind());
     });
   });
 });

@@ -1,4 +1,4 @@
-const dice = require('./dice');
+import { d4, d20 } from "./dice";
 
 const lookup = (table, roll) => {
   return table
@@ -18,10 +18,10 @@ const rain = () => {
     [11, 'Medium'],
     [16, 'Heavy']
   ];
-  const roll = dice.d20();
+  const roll = d20();
 
   if (roll >= 16) {
-    return dice.d20() <= 5 ? 'Tropical storm' : 'Heavy'
+    return d20() <= 5 ? 'Tropical storm' : 'Heavy'
   }
   return lookup(precipitationTable, roll);
 };
@@ -32,7 +32,7 @@ const wind = () => {
     [13, 'Light'],
     [18, 'Strong']
   ];
-  return lookup(windTable, dice.d20());
+  return lookup(windTable, d20());
 };
 
 const raincatcher = (rain) => {
@@ -47,15 +47,15 @@ const raincatcher = (rain) => {
 };
 
 const temperature = () => {
-  const base = Math.round(32 + (dice.d4() % 2 == 0 ? -1 : 1) * dice.d4() / 2);
-  const variance = dice.d20();
+  const base = Math.round(32 + (d4() % 2 == 0 ? -1 : 1) * d4() / 2);
+  const variance = d20();
 
   if (variance <= 14) {
     return base;
   }
   return (variance <= 16)
-    ? base - dice.d4() * 3
-    : base + dice.d4() * 3;
+    ? base - d4() * 3
+    : base + d4() * 3;
 };
 
 const day = () => {
@@ -68,7 +68,7 @@ const day = () => {
   };
 };
 
-module.exports = {
+export default {
   rain,
   wind,
   temperature,
