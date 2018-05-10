@@ -8,11 +8,12 @@
   "scripts": {
     "build": "babel src --out-dir dist",
     "style": "eslint lib/",
-    "test": "mocha test/*",
+    "test": "yarn run build && mocha --require babel-core/register test/*",
     "start": "node index.js"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
     "babel-env": "^2.4.1",
     "eslint": "4.12.1",
     "eslint-config-airbnb": "16.1.0",

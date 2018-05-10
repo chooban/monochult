@@ -7,11 +7,11 @@ describe('The rain in chult', () => {
   var dieRoll;
 
   before(() => {
-    chult = proxyquire('../src/lib/chult', {
+    chult = proxyquire('../dist/lib/chult', {
       './dice': {
         d20: () => dieRoll
       }
-    });
+    }).default;
   });
 
   it('is sometimes dry', () => {
@@ -37,11 +37,11 @@ describe('The rain in chult', () => {
       .onFirstCall().returns(16)
       .onSecondCall().returns(5);
 
-    const chult = proxyquire('../src/lib/chult', {
+    const chult = proxyquire('../dist/lib/chult', {
       './dice': {
         d20: die
       }
-    });
+    }).default;
 
     equal('Tropical storm', chult.rain());
   });
@@ -52,11 +52,11 @@ describe('The wind in Chult', () => {
   var dieRoll;
 
   before(() => {
-    chult = proxyquire('../src/lib/chult', {
+    chult = proxyquire('../dist/lib/chult', {
       './dice': {
         d20: () => dieRoll
       }
-    });
+    }).default;
   });
 
   it('is sometimes non-existent', () => {
