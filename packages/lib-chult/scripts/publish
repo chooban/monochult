@@ -5,8 +5,8 @@ DEPLOYED="$(npm show . version)"
 
 if [ "$CURRENT" = "$DEPLOYED" ]; then
   echo "Versions match"
-  npx release-it --dry-run
+  npx release-it
 else
   echo "Version manually bumped"
-  npx release-it --dry-run $CURRENT
+  npx release-it $CURRENT
 fi
