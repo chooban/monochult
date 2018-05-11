@@ -1,6 +1,6 @@
 {
   "name": "toa-chult",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "Chult!",
   "main": "dist/index.js",
   "author": "Ross Hendry (rhendry@googlemail.com)",
@@ -10,7 +10,7 @@
     "style": "eslint src/",
     "test": "yarn run build && jest",
     "start": "node index.js",
-    "prepublish": "yarn run build",
+    "prepare": "yarn run build",
     "currentversion": "echo $npm_package_version"
   },
   "devDependencies": {
