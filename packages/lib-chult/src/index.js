@@ -1,6 +1,5 @@
-import { day } from "./lib/chult";
+import { day } from './lib/chult';
 
-console.log(day)
 module.exports = {
   day
 };

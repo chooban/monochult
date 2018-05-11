@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "babel src --out-dir dist",
-    "style": "eslint lib/",
+    "style": "eslint src/",
     "test": "yarn run build && jest",
     "start": "node index.js",
     "prepublish": "yarn run build"

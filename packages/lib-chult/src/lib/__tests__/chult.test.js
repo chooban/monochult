@@ -1,12 +1,11 @@
-import { stub } from "sinon";
-import * as chult from "../chult";
+import { stub } from 'sinon';
+import * as chult from '../chult';
 
 const identity = (v) => () => v;
 
 describe('The rain in chult', () => {
-
   it('is sometimes dry', () => {
-    [...Array(6).keys()].slice(1).forEach(i => {
+    [...Array(6).keys()].slice(1).forEach((i) => {
       expect(chult.rain(identity(i))).toBe('None');
     });
   });
@@ -30,19 +29,19 @@ describe('The rain in chult', () => {
 
 describe('The wind in Chult', () => {
   it('is sometimes non-existent', () => {
-    [...Array(13).keys()].slice(1).forEach(i => {
+    [...Array(13).keys()].slice(1).forEach((i) => {
       expect(chult.wind(identity(i))).toEqual('None');
     });
   });
 
   it('is sometimes light', () => {
-    [13, 14, 15, 16, 17].forEach(i => {
+    [13, 14, 15, 16, 17].forEach((i) => {
       expect(chult.wind(identity(i))).toEqual('Light');
     });
   });
 
   it('is sometimes strong', () => {
-    [18, 19, 20].forEach(i => {
+    [18, 19, 20].forEach((i) => {
       expect(chult.wind(identity(i))).toBe('Strong');
     });
   });

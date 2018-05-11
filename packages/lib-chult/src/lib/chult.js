@@ -1,15 +1,12 @@
-import { d4, d20 } from "./dice";
+import { d4, d20 } from './dice';
 
-const lookup = (table, roll) => {
-  return table
-    .reduceRight((acc, cur) => {
-      if (acc) {
-        return acc;
-      }
-      return roll >= cur[0] ? cur[1] : undefined
-    }, undefined);
-
-};
+const lookup = (table, roll) => table
+  .reduceRight((acc, cur) => {
+    if (acc) {
+      return acc;
+    }
+    return roll >= cur[0] ? cur[1] : undefined;
+  }, undefined);
 
 const rain = (roll = d20) => {
   const precipitationTable = [
@@ -20,7 +17,7 @@ const rain = (roll = d20) => {
   ];
 
   if (roll() >= 16) {
-    return roll() <= 5 ? 'Tropical storm' : 'Heavy'
+    return roll() <= 5 ? 'Tropical storm' : 'Heavy';
   }
   return lookup(precipitationTable, roll());
 };
@@ -34,18 +31,20 @@ const wind = (roll = d20) => {
   return lookup(windTable, roll());
 };
 
-const raincatcher = (rain) => {
+// eslint-disable-next-line
+const raincatcher = (rainLevel) => {
   const table = {
-    'None': 'None',
-    'Light': '0.1 gallon per hour',
-    'Medium': '1 gallon per hour',
-    'Heavy': '2 gallons per hour',
+    None: 'None',
+    Light: '0.1 gallon per hour',
+    Medium: '1 gallon per hour',
+    Heavy: '2 gallons per hour',
     'Tropical storm': '2 gallons per hour (might break)'
   };
-  return table[rain];
+  return table[rainLevel];
 };
 
 const temperature = () => {
+  // eslint-disable-next-line
   const base = Math.round(32 + (d4() % 2 == 0 ? -1 : 1) * d4() / 2);
   const variance = d20();
 
@@ -53,16 +52,16 @@ const temperature = () => {
     return base;
   }
   return (variance <= 16)
-    ? base - d4() * 3
-    : base + d4() * 3;
+    ? base - (d4() * 3)
+    : base + (d4() * 3);
 };
 
 const day = () => {
   const rainfall = rain();
   return {
     wind: wind(),
-    rainfall: rainfall,
-    //raincatcher: raincatcher(rainfall),
+    rainfall,
+    // raincatcher: raincatcher(rainfall),
     temperature: temperature()
   };
 };
