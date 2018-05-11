@@ -11,28 +11,27 @@ const lookup = (table, roll) => {
 
 };
 
-const rain = () => {
+const rain = (roll = d20) => {
   const precipitationTable = [
     [1, 'None'],
     [6, 'Light'],
     [11, 'Medium'],
     [16, 'Heavy']
   ];
-  const roll = d20();
 
-  if (roll >= 16) {
-    return d20() <= 5 ? 'Tropical storm' : 'Heavy'
+  if (roll() >= 16) {
+    return roll() <= 5 ? 'Tropical storm' : 'Heavy'
   }
-  return lookup(precipitationTable, roll);
+  return lookup(precipitationTable, roll());
 };
 
-const wind = () => {
+const wind = (roll = d20) => {
   const windTable = [
     [1, 'None'],
     [13, 'Light'],
     [18, 'Strong']
   ];
-  return lookup(windTable, d20());
+  return lookup(windTable, roll());
 };
 
 const raincatcher = (rain) => {
@@ -68,7 +67,7 @@ const day = () => {
   };
 };
 
-export default {
+export {
   rain,
   wind,
   temperature,

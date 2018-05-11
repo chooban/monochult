@@ -8,7 +8,7 @@
   "scripts": {
     "build": "babel src --out-dir dist",
     "style": "eslint lib/",
-    "test": "yarn run build && mocha --require babel-core/register test/*",
+    "test": "yarn run build && jest",
     "start": "node index.js",
     "prepublish": "yarn run build"
   },
@@ -21,8 +21,7 @@
     "eslint-plugin-import": "2.8.0",
     "eslint-plugin-jsx-a11y": "6.0.2",
     "eslint-plugin-react": "7.5.1",
-    "mocha": "4.0.1",
-    "proxyquire": "1.8.0",
+    "jest": "^22.4.3",
     "sinon": "4.1.2"
   },
   "dependencies": {

@@ -1,3 +1,6 @@
 import { day } from "./lib/chult";
 
-export default day;
+console.log(day)
+module.exports = {
+  day
+};
