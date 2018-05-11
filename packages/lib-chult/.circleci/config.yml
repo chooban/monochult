@@ -18,7 +18,7 @@ jobs:
       - run: yarn build
   unit-tests:
     docker:
-      - image: circleci/node10.1.0
+      - image: circleci/node:10.1.0
     working_directory: ~/repo
     steps:
       - checkout
