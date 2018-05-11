@@ -10,5 +10,5 @@ if [ "${CURRENT}" == "${DEPLOYED}" ]; then
   npx release-it -n
 else
   echo "Version manually bumped to ${CURRENT}"
-  npx release-it -n $CURRENT
+  npx release-it -n ${CURRENT}
 fi
