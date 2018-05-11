@@ -1,12 +1,14 @@
 #! /bin/bash
 
-CURRENT=$(npm run --silent currentversion)
-DEPLOYED=$(npm show . version)
+CURRENT="$(npm --silent run currentversion)"
+DEPLOYED="$(npm show . version)"
 
-if [ "$CURRENT" = "$DEPLOYED" ]; then
+echo "Current is ${CURRENT}, deployed version is ${DEPLOYED}"
+
+if [ "${CURRENT}" == "${DEPLOYED}" ]; then
   echo "Versions match. Bumping patch..."
-  npx release-it
+  npx release-it -n
 else
-  echo "Version manually bumped to $(CURRENT)"
-  npx release-it $CURRENT
+  echo "Version manually bumped to ${CURRENT}"
+  npx release-it -n $CURRENT
 fi
