@@ -7,8 +7,8 @@ echo "Current is ${CURRENT}, deployed version is ${DEPLOYED}"
 
 if [ "${CURRENT}" == "${DEPLOYED}" ]; then
   echo "Versions match. Bumping patch..."
-  npx release-it -n
+  npx release-it -n --dry-run
 else
   echo "Version manually bumped to ${CURRENT}"
-  npx release-it -n ${CURRENT}
+  npx release-it -n --dry-run ${CURRENT}
 fi
