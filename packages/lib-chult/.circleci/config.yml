@@ -1,9 +1,12 @@
 version: 2
+
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:10.1.0
 jobs:
   build:
-    docker:
-      - image: circleci/node:10.1.0
-    working_directory: ~/repo
+    <<: *defaults
     steps:
       - checkout
       - restore_cache:
@@ -17,9 +20,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn build
   unit-tests:
-    docker:
-      - image: circleci/node:10.1.0
-    working_directory: ~/repo
+    <<: *defaults
     steps:
       - checkout
       - restore_cache:
@@ -29,9 +30,7 @@ jobs:
       - run: yarn test
   style-check:
     name: Style check
-    docker:
-      - image: circleci/node:10.1.0
-    working_directory: ~/repo
+    <<: *defaults
     steps:
       - checkout
       - restore_cache:
@@ -39,7 +38,23 @@ jobs:
           - v1-dependencies-{{ checksum "package.json" }}
           - v1-dependencies-
       - run: yarn run style
-
+  publish:
+    name: Publish to npm
+    <<: *defaults
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "8b:b8:74:84:da:9b:00:dc:3a:c9:d4:5c:13:8e:f8:18"
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-
+      - run: yarn run build
+      - run:
+          name: NPM Authentication
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
+      - run: ./scripts/publish
 workflows:
   version: 2
   build_and_test:
@@ -51,3 +66,10 @@ workflows:
       - style-check:
           requires:
             - build
+      - publish:
+          requires:
+            - unit-tests
+            - style-check
+          filters:
+            branches:
+              only: /^master$/
