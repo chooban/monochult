@@ -1,14 +1,47 @@
 #! /bin/bash
 
-CURRENT="$(npm --silent run currentversion)"
+vercomp () {
+  if [[ $1 == $2 ]]; then
+    return 0
+  fi
+
+  local IFS=.
+  local i ver1=($1) ver2=($2)
+  # fill empty fields in ver1 with zeros
+  for ((i=${#ver1[@]}; i<${#ver2[@]}; i++)); do
+    ver1[i]=0
+  done
+  for ((i=0; i<${#ver1[@]}; i++)); do
+    if [[ -z ${ver2[i]} ]]; then
+      # fill empty fields in ver2 with zeros
+      ver2[i]=0
+    elif ((10#${ver1[i]} > 10#${ver2[i]})); then
+      return -1
+    elif ((10#${ver1[i]} < 10#${ver2[i]})); then
+      return 1
+    fi
+  done
+  return 0
+}
+
+LOCAL="$(npm --silent run currentversion)"
 DEPLOYED="$(npm show . version)"
 
-echo "Current is ${CURRENT}, deployed version is ${DEPLOYED}"
+echo "Local version is ${LOCAL}, deployed version is ${DEPLOYED}"
 
-if [ "${CURRENT}" == "${DEPLOYED}" ]; then
-  echo "Versions match. Bumping patch..."
-  npx release-it -n
-else
-  echo "Version manually bumped to ${CURRENT}"
-  npx release-it "${CURRENT}" -n
-fi
+vercomp "${LOCAL}" "${DEPLOYED}"
+case $? in
+  -1)
+    echo "Version manually bumped to ${LOCAL}"
+    npx release-it "${LOCAL}" -n --dry-run
+    ;;
+  0)
+    echo "Versions match. Bumping patch..."
+    npx release-it -n --verbose --dry-run
+    ;;
+  1)
+    echo "Sorry, rollback not supported"
+    exit 1
+    ;;
+esac
+

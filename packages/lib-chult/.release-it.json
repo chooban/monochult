@@ -1,4 +1,7 @@
 {
+  "github": {
+    "release": true
+  },
   "src": {
     "commitMessage": "Release %s [ci skip]"
   }

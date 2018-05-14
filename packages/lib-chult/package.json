@@ -1,6 +1,6 @@
 {
   "name": "toa-chult",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Chult!",
   "main": "dist/index.js",
   "author": "Ross Hendry (rhendry@googlemail.com)",
