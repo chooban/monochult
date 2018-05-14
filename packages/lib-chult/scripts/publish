@@ -33,11 +33,11 @@ vercomp "${LOCAL}" "${DEPLOYED}"
 case $? in
   -1)
     echo "Version manually bumped to ${LOCAL}"
-    npx release-it "${LOCAL}" -n --dry-run
+    npx release-it "${LOCAL}" -n
     ;;
   0)
     echo "Versions match. Bumping patch..."
-    npx release-it -n --verbose --dry-run
+    npx release-it -n --verbose
     ;;
   1)
     echo "Sorry, rollback not supported"
