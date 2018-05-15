@@ -4,14 +4,14 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "build": "babel src --out-dir dist",
+    "build": "babel src --out-dir dist --source-maps inline",
     "style": "eslint .",
     "test": "jest"
   },
   "author": "rhendry@googlemail.com",
   "license": "MIT",
   "dependencies": {
-    "toa-chult": "^1.0.8"
+    "toa-chult": "1.0.8"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
