@@ -5,6 +5,16 @@ defaults: &defaults
   docker:
     - image: circleci/node:10.1.0
 jobs:
+  shellcheck:
+    docker:
+      - image: nlknguyen/alpine-shellcheck:v0.4.6
+    steps:
+      - checkout
+      - run:
+          name: Check Scripts
+          command: |
+            find . -type f -name '*.sh' | wc -l
+            find . -type f -name '*.sh' | xargs shellcheck --external-sources
   build:
     <<: *defaults
     steps:
@@ -54,11 +64,12 @@ jobs:
       - run:
           name: NPM Authentication
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
-      - run: ./scripts/publish
+      - run: ./.circleci/publish
 workflows:
   version: 2
   build_and_test:
     jobs:
+      - shellcheck
       - build
       - unit-tests:
           requires:
