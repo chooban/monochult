@@ -1,4 +1,4 @@
-service: hello-word
+service: toa-chult
 
 provider:
   name: google
