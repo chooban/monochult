@@ -16,7 +16,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      <<: *restorecache
+      - <<: *restorecache
       - run: yarn install
       - save_cache:
           paths:
@@ -27,14 +27,14 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      <<: *restorecache
+      - <<: *restorecache
       - run: yarn test
   style-check:
     name: Style check
     <<: *defaults
     steps:
       - checkout
-      <<: *restorecache
+      - <<: *restorecache
       - run: yarn run style
 workflows:
   version: 2
