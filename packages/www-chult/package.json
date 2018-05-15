@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest "
+    "test": "jest"
   },
-  "author": "serverless.com",
+  "author": "rhendry@googlemail.com",
   "license": "MIT",
   "dependencies": {
     "serverless-google-cloudfunctions": "^1.1.0",
-    "toa-chult": "^1.0.1"
+    "toa-chult": "^1.0.8"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
