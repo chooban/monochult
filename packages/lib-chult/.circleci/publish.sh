@@ -1,7 +1,7 @@
 #! /bin/bash
 
 vercomp () {
-  if [[ $1 == $2 ]]; then
+  if [[ $1 == "$2" ]]; then
     return 0
   fi
 
@@ -32,6 +32,9 @@ GIT_COMMIT_DESC="$(git log --format=oneline -n 1 $CIRCLE_SHA1)"
 while getopts 'd' flag; do
   case "${flag}" in
     d) DRY_RUN='--dry-run'
+      ;;
+    *) echo "Unrecognised flag: ${flag}"
+      ;;
   esac
 done
 
@@ -46,11 +49,11 @@ vercomp "${LOCAL}" "${DEPLOYED}"
 case $? in
   -1)
     echo "Version manually bumped to ${LOCAL}"
-    npx release-it "${LOCAL}" -n "${dry_run}"
+    npx release-it "${LOCAL}" -n "${DRY_RUN}"
     ;;
   0)
     echo "Versions match. Bumping patch..."
-    npx release-it -n --verbose "${dry_run}"
+    npx release-it -n --verbose "${DRY_RUN}"
     ;;
   1)
     echo "Sorry, rollback not supported"
