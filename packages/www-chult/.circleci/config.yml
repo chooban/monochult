@@ -6,9 +6,10 @@ defaults: &defaults
     - image: circleci/node:10.1.0
 
 restore_cache: &restorecache
-  keys:
-    - v1-dependencies-{{ checksum "yarn.lock" }}
-    - v1-dependencies-
+   restore_cache:
+     keys:
+       - v1-dependencies-{{ checksum "yarn.lock" }}
+       - v1-dependencies-
 
 jobs:
   build:
