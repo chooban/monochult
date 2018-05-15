@@ -17,9 +17,10 @@ package:
     - node_modules/**
     - .gitignore
     - .git/**
+  excludeDevDependencies: true
 
 functions:
-  first:
+  chult:
     handler: http
     events:
       - http: path
