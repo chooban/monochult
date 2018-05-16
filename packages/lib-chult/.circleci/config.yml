@@ -64,7 +64,11 @@ jobs:
       - run:
           name: NPM Authentication
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
-      - run: ./.circleci/publish
+      - run:
+        - git config --global push.default matching
+        - git config --global user.mail "rhendry@googlemail.com"
+        - git config --global user.name "CircleCI"
+        - ./.circleci/publish
 workflows:
   version: 2
   build_and_test:
