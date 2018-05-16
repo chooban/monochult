@@ -6,6 +6,7 @@ vercomp () {
   fi
 
   local IFS=.
+  # shellcheck disable=SC2206
   local i ver1=($1) ver2=($2)
   # fill empty fields in ver1 with zeros
   for ((i=${#ver1[@]}; i<${#ver2[@]}; i++)); do
@@ -16,7 +17,7 @@ vercomp () {
       # fill empty fields in ver2 with zeros
       ver2[i]=0
     elif ((10#${ver1[i]} > 10#${ver2[i]})); then
-      return -1
+      return 2
     elif ((10#${ver1[i]} < 10#${ver2[i]})); then
       return 1
     fi
@@ -27,7 +28,8 @@ vercomp () {
 DRY_RUN=""
 LOCAL="$(npm --silent run currentversion)"
 DEPLOYED="$(npm show . version)"
-GIT_COMMIT_DESC="$(git log --format=oneline -n 1 $CIRCLE_SHA1)"
+# shellcheck disable=SC2086
+GIT_COMMIT_DESC=$(git log --format=oneline -n 1 $CIRCLE_SHA1)
 
 while getopts 'd' flag; do
   case "${flag}" in
@@ -47,10 +49,6 @@ echo "Local version is ${LOCAL}, deployed version is ${DEPLOYED}"
 
 vercomp "${LOCAL}" "${DEPLOYED}"
 case $? in
-  -1)
-    echo "Version manually bumped to ${LOCAL}"
-    npx release-it "${LOCAL}" -n "${DRY_RUN}"
-    ;;
   0)
     echo "Versions match. Bumping patch..."
     npx release-it -n --verbose "${DRY_RUN}"
@@ -58,6 +56,10 @@ case $? in
   1)
     echo "Sorry, rollback not supported"
     exit 0
+    ;;
+  2)
+    echo "Version manually bumped to ${LOCAL}"
+    npx release-it "${LOCAL}" -n "${DRY_RUN}"
     ;;
 esac
 
