@@ -66,7 +66,6 @@ jobs:
           git config push.default matching
           git config user.email "rhendry@googlemail.com"
           git config user.name "CircleCI"
-          git config --list
       - run:
           name: Release It
           command: ./.circleci/publish.sh
