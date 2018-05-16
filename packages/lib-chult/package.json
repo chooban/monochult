@@ -1,5 +1,5 @@
 {
-  "name": "toa-chult",
+  "name": "@chooban/toa-chult",
   "version": "1.0.8",
   "description": "Chult!",
   "main": "dist/index.js",

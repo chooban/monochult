@@ -62,12 +62,15 @@ jobs:
           - v1-dependencies-
       - run: yarn run build
       - run:
-          name: Deploy
+          name: Deployment Configuration
           command: |
             echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
             git config --global push.default matching
             git config --global user.mail "rhendry@googlemail.com"
             git config --global user.name "CircleCI"
+      - run:
+          name: Deploy
+          command: |
             ./.circleci/publish.sh
 workflows:
   version: 2
