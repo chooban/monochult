@@ -61,14 +61,12 @@ jobs:
           - v1-dependencies-{{ checksum "yarn.lock" }}
           - v1-dependencies-
       - run: yarn run build
-      - run:
-          name: Deployment
-          command: |
-            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
-            git config push.default matching
-            git config user.mail "rhendry@googlemail.com"
-            git config user.name "CircleCI"
-            git config --list
+      - run: |
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
+          git config push.default matching
+          git config user.mail "rhendry@googlemail.com"
+          git config user.name "CircleCI"
+          git config --list
 workflows:
   version: 2
   build_and_test:
