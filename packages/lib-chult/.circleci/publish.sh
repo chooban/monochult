@@ -51,7 +51,7 @@ vercomp "${LOCAL}" "${DEPLOYED}"
 case $? in
   0)
     echo "Versions match. Bumping patch..."
-    npx release-it patch -n -f --verbose "${DRY_RUN}"
+    npx release-it patch -n -f --verbose --debug "${DRY_RUN}"
     ;;
   1)
     echo "Sorry, rollback not supported"
@@ -59,7 +59,7 @@ case $? in
     ;;
   2)
     echo "Version manually bumped to ${LOCAL}"
-    npx release-it "${LOCAL}" -n -f --verbose "${DRY_RUN}"
+    npx release-it "${LOCAL}" -n -f --verbose --debug "${DRY_RUN}"
     ;;
 esac
 
