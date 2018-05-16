@@ -39,7 +39,6 @@ jobs:
           - v1-dependencies-
       - run: yarn test
   style-check:
-    name: Style check
     <<: *defaults
     steps:
       - checkout
@@ -47,9 +46,10 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "yarn.lock" }}
           - v1-dependencies-
-      - run: yarn run style
+      - run:
+          name: Style check
+          command: yarn run style
   publish:
-    name: Publish to npm
     <<: *defaults
     steps:
       - add_ssh_keys:
@@ -62,13 +62,13 @@ jobs:
           - v1-dependencies-
       - run: yarn run build
       - run:
-          name: NPM Authentication
-          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
-      - run:
-        - git config --global push.default matching
-        - git config --global user.mail "rhendry@googlemail.com"
-        - git config --global user.name "CircleCI"
-        - ./.circleci/publish
+          name: Deploy
+          command: |
+            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
+            git config --global push.default matching
+            git config --global user.mail "rhendry@googlemail.com"
+            git config --global user.name "CircleCI"
+            ./.circleci/publish.sh
 workflows:
   version: 2
   build_and_test:
