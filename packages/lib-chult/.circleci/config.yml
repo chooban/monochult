@@ -67,6 +67,9 @@ jobs:
           git config user.mail "rhendry@googlemail.com"
           git config user.name "CircleCI"
           git config --list
+      - run:
+          name: Release It
+          command: ./.circleci/publish.sh
 workflows:
   version: 2
   build_and_test:
