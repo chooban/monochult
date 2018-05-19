@@ -11,7 +11,7 @@
   "author": "rhendry@googlemail.com",
   "license": "MIT",
   "dependencies": {
-    "toa-chult": "1.0.8"
+    "@chooban/toa-chult": "^1.0.15"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

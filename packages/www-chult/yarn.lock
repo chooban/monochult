@@ -16,6 +16,12 @@
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
+"@chooban/toa-chult@^1.0.15":
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/@chooban/toa-chult/-/toa-chult-1.0.15.tgz#2e94acbea0174464dfa30237003bdda2ce378775"
+  dependencies:
+    mathjs "^4.2.2"
+
 "@sinonjs/formatio@^2.0.0":
   version "2.0.0"
   resolved "http://registry.npmjs.org/@sinonjs/formatio/-/formatio-2.0.0.tgz#84db7e9eb5531df18a8c5e0bfb6e449e55e654b2"
@@ -4072,12 +4078,6 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     extend-shallow "^3.0.2"
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
-
-toa-chult@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/toa-chult/-/toa-chult-1.0.8.tgz#23e8ce1140fc002c6ff5bda6aaaab6b666ac2458"
-  dependencies:
-    mathjs "^4.2.2"
 
 tough-cookie@>=2.3.3, tough-cookie@^2.3.3, tough-cookie@~2.3.3:
   version "2.3.4"
