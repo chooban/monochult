@@ -1,6 +1,17 @@
 {
+  "name": "Mono-chult!",
   "license": "MIT",
+  "private": true,
   "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.12.0",
+    "jest": "^22.4.4",
     "lerna": "^2.11.0"
+  },
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "pretest": "eslint packages",
+    "test": "jest"
   }
 }

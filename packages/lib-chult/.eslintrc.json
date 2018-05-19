@@ -9,13 +9,7 @@
     "es6": true,
     "jest": true
   },
-  "globals": {
-  },
-  "plugins": [
-  ],
-  "settings": {
-  },
-  "extends": ["airbnb"],
+  "extends": ["airbnb-base"],
   "rules": {
     "no-console": 2,
     "comma-dangle": ["error", "never"],
