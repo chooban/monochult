@@ -83,7 +83,10 @@ workflows:
     jobs:
       - shellcheck
       - build
-      - unit-tests:
+      - lib-unit-tests:
+          requires:
+            - build
+      - www-unit-tests:
           requires:
             - build
       - style-check:
