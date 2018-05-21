@@ -24,12 +24,12 @@ jobs:
           - v1-dependencies-{{ checksum "yarn.lock" }}
           - v1-dependencies-
       - run: yarn install
-      - run: lerna bootstrap
+      - run: yarn bootstrap
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}
-      - run: lerna run build
+      - run: npx lerna run build
   lib-unit-tests:
     <<: *defaults
     steps:
@@ -38,7 +38,7 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "yarn.lock" }}
           - v1-dependencies-
-      - run: lerna run --scope @chooban/toa-chult test
+      - run: npx lerna run --scope @chooban/toa-chult test
   style-check:
     <<: *defaults
     steps:
@@ -49,7 +49,7 @@ jobs:
           - v1-dependencies-
       - run:
           name: Style check
-          command: lerna run style
+          command: npx lerna run style
   www-unit-tests:
     <<: *defaults
     steps:
@@ -58,7 +58,7 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "yarn.lock" }}
           - v1-dependencies-
-      - run: lerna run --scope www-chult test
+      - run: npx lerna run --scope www-chult test
   publish:
     <<: *defaults
     steps:
@@ -70,7 +70,7 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "yarn.lock" }}
           - v1-dependencies-
-      - run: yarn run build
+      - run: npx lerna run build
       - run: |
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
           git config push.default matching
