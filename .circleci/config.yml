@@ -1,0 +1,100 @@
+version: 2
+
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:10.1.0
+jobs:
+  shellcheck:
+    docker:
+      - image: nlknguyen/alpine-shellcheck:v0.4.6
+    steps:
+      - checkout
+      - run:
+          name: Check Scripts
+          command: |
+            find . -type f -name '*.sh' | wc -l
+            find . -type f -name '*.sh' | xargs shellcheck --external-sources
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "yarn.lock" }}
+          - v1-dependencies-
+      - run: yarn install
+      - run: lerna bootstrap
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+      - run: yarn build
+  lib-unit-tests:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "yarn.lock" }}
+          - v1-dependencies-
+      - run: lerna run --scope @chooban/toa-chult test
+  style-check:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "yarn.lock" }}
+          - v1-dependencies-
+      - run:
+          name: Style check
+          command: lerna run style
+  www-unit-tests:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "yarn.lock" }}
+          - v1-dependencies-
+      - run: lerna run --scope www-chult test
+  publish:
+    <<: *defaults
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "8b:b8:74:84:da:9b:00:dc:3a:c9:d4:5c:13:8e:f8:18"
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "yarn.lock" }}
+          - v1-dependencies-
+      - run: yarn run build
+      - run: |
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
+          git config push.default matching
+          git config user.email "rhendry@googlemail.com"
+          git config user.name "CircleCI"
+      - run:
+          name: 
+          command: yarn run publish
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - shellcheck
+      - build
+      - unit-tests:
+          requires:
+            - build
+      - style-check:
+          requires:
+            - build
+      - publish:
+          requires:
+            - unit-tests
+            - style-check
+          filters:
+            branches:
+              only: /^master$/

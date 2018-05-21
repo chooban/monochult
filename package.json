@@ -8,7 +8,8 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "pretest": "eslint packages",
-    "test": "lerna run test"
+    "test": "lerna run test",
+    "publish": "lerna publish --independent --conventional-commit --yes"
   },
   "workspaces": [
     "packages/*"
