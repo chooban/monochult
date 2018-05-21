@@ -47,6 +47,7 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "yarn.lock" }}
           - v1-dependencies-
+      - run: npx lerna run build
       - run:
           name: Style check
           command: npx lerna run style
