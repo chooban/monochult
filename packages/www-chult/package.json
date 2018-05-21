@@ -1,6 +1,6 @@
 {
   "name": "www-chult",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
   "private": true,
@@ -12,7 +12,7 @@
   "author": "rhendry@googlemail.com",
   "license": "MIT",
   "dependencies": {
-    "@chooban/toa-chult": "^1.0.15"
+    "@chooban/toa-chult": "^0.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
