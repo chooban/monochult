@@ -23,7 +23,7 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "yarn.lock" }}
           - v1-dependencies-
-      - run: yarn install
+      - run: yarn install --offline
       - run: yarn bootstrap
       - save_cache:
           paths:
